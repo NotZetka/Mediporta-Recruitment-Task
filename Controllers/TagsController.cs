@@ -1,4 +1,5 @@
 using MediatR;
+using Mediporta_Recruitment_Task.Handlers.Tags.CountPercentageShare;
 using Mediporta_Recruitment_Task.Handlers.Tags.ListTags;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +17,13 @@ namespace Mediporta_Recruitment_Task.Controllers
 
         [HttpPost("List")]
         public async Task<IActionResult> ListTags([FromQuery] ListTagsQuery query)
+        {
+            var response = await _mediator.Send(query);
+            return Ok(response);
+        }
+
+        [HttpPost("CountPercentage")]
+        public async Task<IActionResult> CountPercentageShare([FromQuery] CountPercentageShareQuery query)
         {
             var response = await _mediator.Send(query);
             return Ok(response);
