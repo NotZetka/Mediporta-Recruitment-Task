@@ -1,5 +1,10 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Mediporta_Recruitment_Task.Clients.TagsClient;
+using Mediporta_Recruitment_Task.Database;
+using Mediporta_Recruitment_Task.Extentions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace Mediporta_Recruitment_Task
 {
@@ -12,14 +17,22 @@ namespace Mediporta_Recruitment_Task
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(option =>
+            {
+                option.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
             services.AddHttpClient();
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+            services.AddDbContext<TagsContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
             });
+            services.AddTransient<ITagsClient, TagsClient>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -37,6 +50,8 @@ namespace Mediporta_Recruitment_Task
             {
                 endpoints.MapControllers();
             });
+            app.ApplyMigrations();
+            app.InitDatabase();
         }
     }
 }

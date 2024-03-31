@@ -1,6 +1,6 @@
-﻿using Mediporta_Recruitment_Task.Models.StackOverflowTags;
+﻿using Mediporta_Recruitment_Task.Handlers.Tags;
 
-namespace Mediporta_Recruitment_Task.Handlers.Tags.ListTags
+namespace Mediporta_Recruitment_Task.Clients.TagsClient
 {
     public class ListTagsResponse
     {
