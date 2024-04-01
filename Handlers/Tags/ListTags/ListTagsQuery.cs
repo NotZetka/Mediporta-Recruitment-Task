@@ -8,5 +8,6 @@ namespace Mediporta_Recruitment_Task.Handlers.Tags.ListTags
         public OrderSelector OrderBy { get; set; }
         public bool Descending { get; set; }
 
+        public int Page { get; set; }
     }
 }
