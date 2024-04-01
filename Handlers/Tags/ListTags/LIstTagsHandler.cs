@@ -24,7 +24,7 @@ namespace Mediporta_Recruitment_Task.Handlers.Tags.ListTags
             {
                 tags = (request.Descending==false) ? tags.OrderBy(x => x.Name) : tags.OrderByDescending(x => x.Name);
             }
-            else if (request.OrderBy == OrderSelector.Count)
+            else
             {
                 tags = (request.Descending == false) ? tags.OrderBy(x => x.Count) : tags.OrderByDescending(x => x.Count);
             }

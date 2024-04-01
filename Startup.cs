@@ -1,6 +1,11 @@
-﻿using Mediporta_Recruitment_Task.Clients.TagsClient;
+﻿using FluentValidation;
+using MediatR;
+using Mediporta_Recruitment_Task.Clients.TagsClient;
 using Mediporta_Recruitment_Task.Database;
 using Mediporta_Recruitment_Task.Extentions;
+using Mediporta_Recruitment_Task.Handlers.Tags.CountPercentageShare;
+using Mediporta_Recruitment_Task.Handlers.Tags.ListTags;
+using Mediporta_Recruitment_Task.Handlers.Tags.ReloadTags;
 using Mediporta_Recruitment_Task.Middleware;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -24,6 +29,7 @@ namespace Mediporta_Recruitment_Task
             });
             services.AddHttpClient();
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             services.AddDbContext<TagsContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
@@ -35,6 +41,9 @@ namespace Mediporta_Recruitment_Task
             });
             services.AddTransient<ITagsClient, TagsClient>();
             services.AddSingleton<ILogger<ErrorHandlingMiddleware>, Logger<ErrorHandlingMiddleware>>();
+            services.AddTransient<IValidator<CountPercentageShareQuery>, CountPercentageShareQueryValidator>();
+            services.AddTransient<IValidator<ListTagsQuery>, ListTagsQueryValidator>();
+            services.AddTransient<IValidator<ReloadTagsQuery>, ReloadTagsQueryValidator>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

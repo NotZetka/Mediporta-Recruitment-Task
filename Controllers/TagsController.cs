@@ -24,7 +24,7 @@ namespace Mediporta_Recruitment_Task.Controllers
         }
 
         [HttpPost("CountPercentage")]
-        public async Task<IActionResult> CountPercentageShare([FromQuery] CountPercentageShareQuery query)
+        public async Task<IActionResult> CountPercentageShare([FromBody] CountPercentageShareQuery query)
         {
             var response = await _mediator.Send(query);
             return Ok(response);

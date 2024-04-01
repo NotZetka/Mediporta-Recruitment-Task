@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using FluentValidation;
+using Newtonsoft.Json;
+using System;
 
 namespace Mediporta_Recruitment_Task.Middleware
 {
@@ -23,7 +25,13 @@ namespace Mediporta_Recruitment_Task.Middleware
             {
                 await HandleExceptionAsync(httpContext, ex.Message, StatusCodes.Status503ServiceUnavailable);
             }
-            catch
+            catch(ValidationException ex)
+            {
+                var errorMessages = ex.Errors.Select(x => $"{x.PropertyName} : {x.ErrorMessage}");
+                var message = string.Join(' ',errorMessages);
+                await HandleExceptionAsync(httpContext, message, StatusCodes.Status400BadRequest);
+            }
+            catch(Exception ex) 
             {
                 await HandleExceptionAsync(httpContext, "Something went wrong", StatusCodes.Status500InternalServerError);
             }
