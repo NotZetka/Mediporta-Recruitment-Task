@@ -6,8 +6,9 @@ namespace Mediporta_Recruitment_Task.Clients.TagsClient
 {
     public class TagsClient : ITagsClient
     {
-        public async Task<IEnumerable<Tag>> GetTags(int remaining)
+        public async Task<IEnumerable<Tag>> GetTags(int size)
         {
+            var remaining = size;
             var page = 1;
 
             using (HttpClient client = new HttpClient())
@@ -15,10 +16,10 @@ namespace Mediporta_Recruitment_Task.Clients.TagsClient
                 var tags = new List<Tag>();
                 while (remaining > 0)
                 {
-                    var size = remaining <= 100 ? remaining : 100;
+                    var pageSize = remaining <= 100 ? remaining : 100;
                     try
                     {
-                        var apiUrl = $"https://api.stackexchange.com/2.3/tags?page={page}&pagesize={size}&order=desc&sort=popular&site=stackoverflow";
+                        var apiUrl = $"https://api.stackexchange.com/2.3/tags?page={page}&pagesize={pageSize}&order=desc&sort=popular&site=stackoverflow";
                         HttpResponseMessage response = await client.GetAsync(apiUrl);
                         response.EnsureSuccessStatusCode();
 
@@ -44,7 +45,7 @@ namespace Mediporta_Recruitment_Task.Clients.TagsClient
                     finally
                     {
                         page++;
-                        remaining -= size;
+                        remaining -= pageSize;
                     }
                 }
                 return tags;

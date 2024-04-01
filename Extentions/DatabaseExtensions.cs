@@ -27,7 +27,7 @@ namespace Mediporta_Recruitment_Task.Extentions
             if(tags.Count()==0) {
                 var tagsClient = scope.ServiceProvider.GetRequiredService<ITagsClient>();
                 var tagsFromClient = await tagsClient.GetTags(1000);
-                dbContext.Tags.AddRangeAsync(tagsFromClient.Select(x => new TagEntity
+                await dbContext.Tags.AddRangeAsync(tagsFromClient.Select(x => new TagEntity
                 {
                     Name = x.Name,
                     Count = x.Count 
