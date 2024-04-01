@@ -3,11 +3,11 @@ using Mediporta_Recruitment_Task.Database;
 
 namespace Mediporta_Recruitment_Task.Handlers.Tags.ListTags
 {
-    public class LIstTagsHandler : IRequestHandler<ListTagsQuery, IEnumerable<Tag>>
+    public class ListTagsHandler : IRequestHandler<ListTagsQuery, IEnumerable<Tag>>
     {
         private readonly TagsContext _dbContext;
 
-        public LIstTagsHandler(TagsContext dbContext)
+        public ListTagsHandler(TagsContext dbContext)
         {
             _dbContext = dbContext;
         }

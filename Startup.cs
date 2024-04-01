@@ -1,6 +1,7 @@
 ﻿using Mediporta_Recruitment_Task.Clients.TagsClient;
 using Mediporta_Recruitment_Task.Database;
 using Mediporta_Recruitment_Task.Extentions;
+using Mediporta_Recruitment_Task.Middleware;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
@@ -33,6 +34,7 @@ namespace Mediporta_Recruitment_Task
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
             });
             services.AddTransient<ITagsClient, TagsClient>();
+            services.AddSingleton<ILogger<ErrorHandlingMiddleware>, Logger<ErrorHandlingMiddleware>>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -43,6 +45,7 @@ namespace Mediporta_Recruitment_Task
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Your API v1"));
             }
 
+            app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
