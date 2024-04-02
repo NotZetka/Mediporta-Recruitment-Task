@@ -17,7 +17,7 @@ namespace Mediporta_Recruitment_Task.Controllers
         }
 
         [HttpPost("List")]
-        public async Task<IActionResult> ListTags([FromQuery] ListTagsQuery query)
+        public async Task<IActionResult> ListTags([FromBody] ListTagsQuery query)
         {
             var response = await _mediator.Send(query);
             return Ok(response);
