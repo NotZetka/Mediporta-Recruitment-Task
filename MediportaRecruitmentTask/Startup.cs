@@ -32,7 +32,11 @@ namespace Mediporta_Recruitment_Task
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             services.AddDbContext<TagsContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
+                var dbName = Environment.GetEnvironmentVariable("DB_NAME");
+                var dbPassword = Environment.GetEnvironmentVariable("DB_SA_PASSWORD");
+                var connectionstring = $"Data Source={dbHost};Initial Catalog={dbName};User ID=sa;Password={dbPassword};TrustServerCertificate=true";
+                options.UseSqlServer(connectionstring);
             });
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(c =>

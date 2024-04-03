@@ -1,0 +1,42 @@
+version: '3.4'
+
+networks:
+  mediportaapp:
+
+services:
+  mediportadb:
+    container_name: mediporta-db
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=password@12345#
+    networks:
+      - mediportaapp
+
+  mediportarecruitmenttask:
+    container_name: mediporta-task
+    image: ${DOCKER_REGISTRY-}mediportarecruitmenttask
+    build:
+      context: MediportaRecruitmentTask
+      dockerfile: Dockerfile
+    depends_on: 
+      - mediportadb
+    environment:
+      - DB_HOST=mediportadb
+      - DB_NAME=Mediporta
+      - DB_SA_PASSWORD=password@12345#
+    networks:
+      - mediportaapp
+
+  tests:
+    container_name: mediporta-tests
+    image: ${DOCKER_REGISTRY-}tests
+    build:
+      context: .
+      dockerfile: Tests/Dockerfile
+    networks:
+      - mediportaapp
+    depends_on: 
+      - mediportadb
+      - mediportarecruitmenttask
+
