@@ -1,4 +1,5 @@
 using MediatR;
+using Mediporta_Recruitment_Task.Handlers.Tags;
 using Mediporta_Recruitment_Task.Handlers.Tags.CountPercentageShare;
 using Mediporta_Recruitment_Task.Handlers.Tags.ListTags;
 using Mediporta_Recruitment_Task.Handlers.Tags.ReloadTags;
@@ -17,14 +18,14 @@ namespace Mediporta_Recruitment_Task.Controllers
         }
 
         [HttpPost("List")]
-        public async Task<IActionResult> ListTags([FromBody] ListTagsQuery query)
+        public async Task<ActionResult<IEnumerable<Tag>>> ListTags([FromBody] ListTagsQuery query)
         {
             var response = await _mediator.Send(query);
             return Ok(response);
         }
 
         [HttpPost("CountPercentage")]
-        public async Task<IActionResult> CountPercentageShare([FromBody] CountPercentageShareQuery query)
+        public async Task<ActionResult<CountPercentageShareResponse>> CountPercentageShare([FromBody] CountPercentageShareQuery query)
         {
             var response = await _mediator.Send(query);
             return Ok(response);

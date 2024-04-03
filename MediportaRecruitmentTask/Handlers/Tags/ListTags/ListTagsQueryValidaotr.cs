@@ -6,7 +6,7 @@ namespace Mediporta_Recruitment_Task.Handlers.Tags.ListTags
     {
         public ListTagsQueryValidator()
         {
-            RuleFor(x=>x.Size).GreaterThanOrEqualTo(1);
+            RuleFor(x=>x.Size).GreaterThanOrEqualTo(0);
             RuleFor(x=>x.Page).GreaterThanOrEqualTo(1);
         }
     }

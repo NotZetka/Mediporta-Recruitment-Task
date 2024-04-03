@@ -29,8 +29,9 @@ namespace Mediporta_Recruitment_Task.Handlers.Tags.ListTags
                 tags = (request.Descending == false) ? tags.OrderBy(x => x.Count) : tags.OrderByDescending(x => x.Count);
             }
 
-            var skip = request.Page > 1 ? request.Size * (request.Page-1) : 0;
-            tags = tags.Skip(skip).Take(request.Size);
+            var size = request.Size == 0 ? tagEntities.Count() : request.Size;
+            var skip = request.Page > 1 ? size * (request.Page-1) : 0;
+            tags = tags.Skip(skip).Take(size);
 
             return tags;
         }

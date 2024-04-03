@@ -45,7 +45,6 @@ namespace Mediporta_Recruitment_Task
             });
             services.AddTransient<ITagsClient, TagsClient>();
             services.AddSingleton<ILogger<ErrorHandlingMiddleware>, Logger<ErrorHandlingMiddleware>>();
-            services.AddTransient<IValidator<CountPercentageShareQuery>, CountPercentageShareQueryValidator>();
             services.AddTransient<IValidator<ListTagsQuery>, ListTagsQueryValidator>();
             services.AddTransient<IValidator<ReloadTagsQuery>, ReloadTagsQueryValidator>();
         }

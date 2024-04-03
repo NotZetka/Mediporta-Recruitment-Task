@@ -5,7 +5,6 @@ namespace Mediporta_Recruitment_Task.Handlers.Tags.ListTags
 {
     public class ListTagsQuery : IRequest<IEnumerable<Tag>>
     {
-        [DefaultValue(100)]
         public int Size { get; set; }
 
         [DefaultValue(OrderSelector.Count)]
