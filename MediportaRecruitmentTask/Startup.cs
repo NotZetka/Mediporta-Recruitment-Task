@@ -42,6 +42,8 @@ namespace Mediporta_Recruitment_Task
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
+                var filePath = Path.Combine(AppContext.BaseDirectory, "Mediporta Recruitment Task.xml");
+                c.IncludeXmlComments(filePath);
             });
             services.AddTransient<ITagsClient, TagsClient>();
             services.AddSingleton<ILogger<ErrorHandlingMiddleware>, Logger<ErrorHandlingMiddleware>>();
