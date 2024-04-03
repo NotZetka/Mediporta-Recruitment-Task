@@ -20,7 +20,7 @@ namespace Mediporta_Recruitment_Task.Handlers.Tags.ListTags
                 Count = x.Count,
             });
 
-            if(request.OrderBy==OrderSelector.Name)
+            if(request.OrderBy==ListTagsOrderSelector.Name)
             {
                 tags = (request.Descending==false) ? tags.OrderBy(x => x.Name) : tags.OrderByDescending(x => x.Name);
             }

@@ -7,8 +7,8 @@ namespace Mediporta_Recruitment_Task.Handlers.Tags.ListTags
     {
         public int Size { get; set; }
 
-        [DefaultValue(OrderSelector.Count)]
-        public OrderSelector OrderBy { get; set; }
+        [DefaultValue(ListTagsOrderSelector.Count)]
+        public ListTagsOrderSelector OrderBy { get; set; }
 
         [DefaultValue(true)]
         public bool Descending { get; set; }

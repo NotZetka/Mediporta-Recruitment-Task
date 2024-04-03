@@ -1,4 +1,5 @@
 ﻿using Mediporta_Recruitment_Task.Handlers.Tags;
+using Mediporta_Recruitment_Task.Handlers.Tags.ListTags;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Json;
@@ -22,7 +23,7 @@ namespace Tests.IntegrationTests
             var queryData = new
             {
                 Size = 100,
-                OrderBy = OrderSelector.Count,
+                OrderBy = ListTagsOrderSelector.Count,
                 Descending = true,
                 Page = 1
             };

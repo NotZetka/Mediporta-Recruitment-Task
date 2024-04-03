@@ -41,10 +41,15 @@ namespace Mediporta_Recruitment_Task.Handlers.Tags.CountPercentageShare
                     dict.Add(tag.Name, 100 * (float)tag.Count / totalCount);
                 }
             }
+            var dictResponse = (request.OrderBy == CountPercentageOrderSelector.Name) ?
+                ((request.Descending == false) ? dict.OrderBy(x => x.Key) : dict.OrderByDescending(x => x.Key)) :
+                ((request.Descending == false) ? dict.OrderBy(x => x.Value) : dict.OrderByDescending(x => x.Value));
+            var size = request.Size == 0 ? dictResponse.Count() : request.Size;
+            var skip = request.Page > 1 ? size * (request.Page - 1) : 0;
 
             var response =  new CountPercentageShareResponse() { 
                 Total = percentage,
-                Individual = dict
+                Individual = dictResponse.Skip(skip).Take(size).ToDictionary()
             };
             return response;
         }
