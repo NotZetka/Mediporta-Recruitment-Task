@@ -1,8 +1,8 @@
 ﻿namespace Mediporta_Recruitment_Task.Handlers.Tags.ListTags
 {
-    public enum ListTagsOrderSelector
+    public static class ListTagsOrderSelector
     {
-        Count,
-        Name
+        public const string Count = "Count";
+        public static string Name = "Name";
     }
 }

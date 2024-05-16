@@ -20,22 +20,12 @@ namespace Mediporta_Recruitment_Task.Clients.TagsClient
                     var apiUrl = $"https://api.stackexchange.com/2.3/tags?page={page}&pagesize={pageSize}&order=desc&sort=popular&site=stackoverflow";
                     HttpResponseMessage response = await client.GetAsync(apiUrl);
                     response.EnsureSuccessStatusCode();
-
-                    if (response.Content.Headers.ContentEncoding.Contains("gzip"))
+                    var deserializedResponse = JsonConvert.DeserializeObject<ListTagsResponse>(await response.Content.ReadAsStringAsync());
+                    if (deserializedResponse != null)
                     {
-                        using (Stream stream = await response.Content.ReadAsStreamAsync())
-                        using (GZipStream gzipStream = new GZipStream(stream, CompressionMode.Decompress))
-                        using (StreamReader reader = new StreamReader(gzipStream))
-                        {
-                            string responseBody = await reader.ReadToEndAsync();
-                            var deserializedResponse = JsonConvert.DeserializeObject<ListTagsResponse>(responseBody);
-                            if (deserializedResponse != null)
-                            {
-                                tags.AddRange(deserializedResponse.Items);
-                            }
-                        }
+                        tags.AddRange(deserializedResponse.Items);
                     }
-                    
+
                     page++;
                     remaining -= pageSize;
                 }

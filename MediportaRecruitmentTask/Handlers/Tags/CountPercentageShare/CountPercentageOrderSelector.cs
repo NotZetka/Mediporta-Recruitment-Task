@@ -1,8 +1,8 @@
 ﻿namespace Mediporta_Recruitment_Task.Handlers.Tags.CountPercentageShare
 {
-    public enum CountPercentageOrderSelector
+    public static class CountPercentageOrderSelector
     {
-        Percentage,
-        Name
+        public const string Percentage = "Percenatge";
+        public static string Name = "Name";
     }
 }
